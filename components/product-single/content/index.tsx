@@ -2,12 +2,12 @@ import { some } from "lodash";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "store";
-import { addProduct } from "store/reducers/cart";
 import { toggleFavProduct } from "store/reducers/user";
 import type { ProductStoreType, ProductType } from "types";
 
 import toast from 'react-hot-toast';
 import { addToWishlist, removeFromWishlist } from 'store/reducers/wishlist';
+import { useAddToCart } from '../../../hooks/useAddToCart';
 import productsColors from "../../../utils/data/products-colors";
 import productsSizes from "../../../utils/data/products-sizes";
 import CheckboxColor from "../../products-filter/form-builder/checkbox-color";
@@ -57,16 +57,8 @@ const Content = ({ product }: ProductContent) => {
     color,
     size: itemSize,
   };
-
-  const addToCart = () => {
-    const productStore = {
-      count,
-      product: productToSave,
-    };
-    dispatch(addProduct(productStore));
-    toast.success('Product added to Cart.');
-  };
-
+  //Get the Add to Cart Hook
+  const addToCart = useAddToCart();
   //Functionality for add to wishlist
   const handleAddToWishlist = () => {
     dispatch(addToWishlist({ product: productToSave }));
@@ -151,7 +143,7 @@ const Content = ({ product }: ProductContent) => {
 
             <button
               type="submit"
-              onClick={() => addToCart()}
+              onClick={() => addToCart(productToSave, count)}
               className="btn btn--rounded btn--yellow"
             >
               Add to cart

@@ -1,15 +1,16 @@
+import { useAddToCart } from 'hooks/useAddToCart';
 import { useDispatch } from "react-redux";
 import { removeFromWishlist } from "store/reducers/wishlist";
 import type { ProductStoreType } from "types";
 
 const WishlistProds = ({
-  thumb,
-  name,
   id,
+  name,
+  thumb,
+  price,
+  count,
   color,
   size,
-  count,
-  price,
 }: ProductStoreType) => {
   const dispatch = useDispatch();
 
@@ -17,6 +18,17 @@ const WishlistProds = ({
   const handleRemoveFromWishlist = () => {
     dispatch(removeFromWishlist(id))
   };
+  const productToSave = {
+    id,
+    name,
+    thumb,
+    price,
+    count,
+    color,
+    size,
+  }
+  //Get the Add to Cart Hook
+  const addToCart = useAddToCart();
 
   return (
     <tr>
@@ -42,13 +54,15 @@ const WishlistProds = ({
         <strong>{count}</strong>
       </td>
       <td>${price}</td>
-      <td style={{
-        width: '200px'
-      }}>
+      <td>
         <button
           type="submit"
-          // onClick={() => addToCart()}
+          onClick={() => addToCart(productToSave, count)}
           className="btn btn--rounded btn--yellow"
+          style={{
+            width: '140px',
+            marginRight: '10px'
+          }}
         >
           Add to cart
         </button>
