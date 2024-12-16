@@ -22,6 +22,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const navRef = useRef(null);
   const searchRef = useRef(null);
 
@@ -56,6 +57,24 @@ const Header = ({ isErrorPage }: HeaderType) => {
   useOnClickOutside(navRef, closeMenu);
   useOnClickOutside(searchRef, closeSearch);
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchText.trim()) {
+      // Update the route with the search query
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, search: searchText.trim() },
+      });
+    }
+  };
+  const clearSearch = () => {
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, search: '' },
+    })
+    setSearchText('')
+  };
+
   return (
     <header className={`site-header ${!onTop ? "site-header--fixed" : ""}`}>
       <div className="container">
@@ -78,11 +97,12 @@ const Header = ({ isErrorPage }: HeaderType) => {
         </nav>
 
         <div className="site-header__actions">
-          <button
+          <div
             ref={searchRef}
             className={`search-form-wrapper ${searchOpen ? "search-form--active" : ""}`}
+            style={{ position: 'relative' }}
           >
-            <form className="search-form">
+            <form className="search-form" onSubmit={handleSearchSubmit}>
               <i
                 className="icon-cancel"
                 onClick={() => setSearchOpen(!searchOpen)}
@@ -90,14 +110,31 @@ const Header = ({ isErrorPage }: HeaderType) => {
               <input
                 type="text"
                 name="search"
+                value={searchText}
                 placeholder="Enter the product you are looking for"
+                onChange={(e) => setSearchText(e.target.value)}
               />
+              <button type="submit" style={{ display: "none" }} />
             </form>
             <i
               onClick={() => setSearchOpen(!searchOpen)}
               className="icon-search"
             />
-          </button>
+            {/* Clar Search */}
+            <button
+              onClick={() => clearSearch()}
+              style={{
+                position: 'absolute',
+                right: '30px',
+                top: '-4px',
+                backgroundColor: '#dedede',
+                padding: '2px 10px',
+                borderRadius: '5px',
+                display: searchText ? 'block' : 'none',
+                zIndex: '9999'
+              }}
+            >X</button>
+          </div>
           <Link href="/cart" legacyBehavior>
             <button className="btn-cart">
               <i className="icon-cart" />

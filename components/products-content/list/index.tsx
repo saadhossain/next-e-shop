@@ -1,6 +1,7 @@
 import useSwr from "swr";
 import type { ProductTypeList } from "types";
 
+import { useRouter } from 'next/router';
 import ProductItem from "../../product-item";
 import ProductsLoading from "./loading";
 
@@ -9,13 +10,18 @@ const ProductsContent = () => {
   const { data, error } = useSwr("/api/products", fetcher);
 
   if (error) return <div>Failed to load users</div>;
+  const router = useRouter();
+  const searchText = router.query.search as string;
+  const filteredProducts = searchText
+    ? data?.filter((d: ProductTypeList) => d.name.toLowerCase().includes(searchText))
+    : data;
   return (
     <>
-      {!data && <ProductsLoading />}
+      {!filteredProducts && <ProductsLoading />}
 
-      {data && (
+      {filteredProducts && (
         <section className="products-list">
-          {data.map((item: ProductTypeList) => (
+          {filteredProducts.map((item: ProductTypeList) => (
             <ProductItem
               id={item.id}
               name={item.name}
