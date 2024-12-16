@@ -61,23 +61,28 @@ const ShoppingCart = () => {
           <Link href="/products" className="cart__btn-back">
             <i className="icon-left" /> Continue Shopping
           </Link>
-          <input
-            type="text"
-            placeholder="Promo Code"
-            className="cart__promo-code"
-          />
+          {/* Hide Promo Input, Total Amount and Checkout button if there is nothing in the Cart */}
+          {
+            cartItems.length > 0 && <>
+              <input
+                type="text"
+                placeholder="Promo Code"
+                className="cart__promo-code"
+              />
 
-          <div className="cart-actions__items-wrapper">
-            <p className="cart-actions__total">
-              Total cost <strong>${priceTotal().toFixed(2)}</strong>
-            </p>
-            <Link
-              href="/cart/checkout"
-              className="btn btn--rounded btn--yellow"
-            >
-              Checkout
-            </Link>
-          </div>
+              <div className="cart-actions__items-wrapper">
+                <p className="cart-actions__total">
+                  Total cost <strong>${priceTotal().toFixed(2)}</strong>
+                </p>
+                <Link
+                  href="/cart/checkout"
+                  className="btn btn--rounded btn--yellow"
+                >
+                  Checkout
+                </Link>
+              </div>
+            </>
+          }
         </div>
       </div>
     </section>
