@@ -20,7 +20,7 @@ const ProductsFilter = () => {
   };
 
   const router = useRouter();
-  const { category: _category, ...remainingQuery } = router.query;
+  const { category, ...remainingQuery } = router.query;
 
   //Set the Selected Category to the Url for filtering feature
   const handleCategoryFilter = (e: ChangeEvent<HTMLInputElement>) => {

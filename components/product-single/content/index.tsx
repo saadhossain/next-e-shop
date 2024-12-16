@@ -21,7 +21,7 @@ const Content = ({ product }: ProductContent) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
   const router = useRouter();
-  const { size: _size, ...remainingQuery } = router.query;
+  const { size, ...remainingQuery } = router.query;
   const itemSize = (router.query.size as string) || '';
   const color = (router.query.color as string) || '';
 

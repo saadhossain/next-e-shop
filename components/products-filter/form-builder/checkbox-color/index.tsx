@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 
 type CheckboxColorType = {
   type?: string;
@@ -16,7 +17,7 @@ const CheckboxColor = ({
   valueName,
   slectedColor
 }: CheckboxColorType) => {
-  const onSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const dataName = e.target.getAttribute("data-name");
     if (onChange && dataName) {
       onChange(dataName);
