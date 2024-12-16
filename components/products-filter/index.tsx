@@ -1,9 +1,10 @@
 import Slider from "rc-slider";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import productsColors from "../../utils/data/products-colors";
 import productsSizes from "../../utils/data/products-sizes";
 // data
+import { useRouter } from 'next/router';
 import productsTypes from "../../utils/data/products-types";
 import Checkbox from "./form-builder/checkbox";
 import CheckboxColor from "./form-builder/checkbox-color";
@@ -17,6 +18,22 @@ const ProductsFilter = () => {
   const addQueryParams = () => {
     // query params changes
   };
+  const [prodCategory, setProdCategory] = useState<string>("");
+  const router = useRouter();
+
+  //Set the Selected Category to the Url for filtering feature
+  const handleCategoryFilter = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, category: e.target.name },
+      });
+    } else {
+      setProdCategory("");
+    }
+  };
+  //Get the Search Text from the router query
+  const selectedCategory = router.query.category as string;
   return (
     <form className="products-filter" onChange={addQueryParams}>
       <button
@@ -31,10 +48,16 @@ const ProductsFilter = () => {
         className={`products-filter__wrapper ${filtersOpen ? "products-filter__wrapper--open" : ""}`}
       >
         <div className="products-filter__block">
-          <button type="button">Product type</button>
+          <button type="button">Product type {prodCategory}</button>
           <div className="products-filter__block__content">
             {productsTypes.map((type) => (
-              <Checkbox key={type.id} name="product-type" label={type.name} />
+              <Checkbox
+                key={type.id}
+                name={type.name}
+                label={type.name}
+                handleCategoryFilter={handleCategoryFilter}
+                selectedCategory={selectedCategory}
+              />
             ))}
           </div>
         </div>
@@ -60,6 +83,8 @@ const ProductsFilter = () => {
                 key={type.id}
                 name="product-size"
                 label={type.label}
+                handleCategoryFilter={handleCategoryFilter}
+                selectedCategory={selectedCategory}
               />
             ))}
           </div>

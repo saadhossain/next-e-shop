@@ -4,12 +4,11 @@ import List from "./list";
 
 const ProductsContent = () => {
   const [orderProductsOpen, setOrderProductsOpen] = useState(false);
-
   return (
     <section className="products-content">
       <div className="products-content__intro">
         <h2>
-          Men's Tops <span>(133)</span>
+          Featured Products <span>(133)</span>
         </h2>
         <button
           type="button"

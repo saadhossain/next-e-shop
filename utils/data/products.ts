@@ -657,7 +657,7 @@ export const products = [
   },
   {
     id: '12',
-    name: 'Nike Air Jordan 1 Red And Black',
+    name: 'Nike Air 1 Red And Black Shoe',
     price: 129.99,
     discount: 30,
     quantityAvailable: 2,
@@ -717,7 +717,7 @@ export const products = [
   },
   {
     id: '13',
-    name: 'Nike Baseball Cleats',
+    name: 'Nike Baseball Cleats Shoe',
     price: 189.99,
     discount: 30,
     quantityAvailable: 2,
