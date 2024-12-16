@@ -4,7 +4,7 @@ type CheckboxColorType = {
   name: string;
   color: string;
   valueName: string;
-  slectedColor: string;
+  slectedColor?: string;
   onChange?: (value: string) => void;
 };
 

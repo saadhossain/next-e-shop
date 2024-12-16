@@ -11,7 +11,7 @@ export const productsTypes = [
   },
   {
     id: '3',
-    name: 'Tank Tops',
+    name: 'Shirts',
     count: '56',
   },
   {

@@ -17,7 +17,6 @@ const ProductsFilter = () => {
   const addQueryParams = () => {
     // query params changes
   };
-
   return (
     <form className="products-filter" onChange={addQueryParams}>
       <button
