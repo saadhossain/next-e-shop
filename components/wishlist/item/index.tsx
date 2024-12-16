@@ -50,10 +50,10 @@ const WishlistProds = ({
       <td className="cart-item-before" data-label="Size">
         {size}
       </td>
-      <td>
+      <td className="cart-item-before" data-label="Quantity">
         <strong>{count}</strong>
       </td>
-      <td>${price}</td>
+      <td className="cart-item-before" data-label="Price">${price}</td>
       <td>
         <button
           type="submit"
