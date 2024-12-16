@@ -2,11 +2,21 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import type { RootState } from "store";
 
+import { useRouter } from 'next/router';
+import { ProductStoreType } from 'types';
 import CartStatus from "../cart-status";
 import Item from "./item";
 
 const Wishlist = () => {
   const { wishlistItems } = useSelector((state: RootState) => state.wishlist);
+
+  const router = useRouter();
+  //Get the Search Text from the router query
+  const searchText = router.query.search as string;
+  // Filter the Products depending on the search
+  const filteredWishlistItems = (searchText
+    ? wishlistItems?.filter((item: ProductStoreType) => item.name.toLowerCase().includes(searchText))
+    : wishlistItems)
 
   const priceTotal = () => {
     let totalPrice = 0;
@@ -26,7 +36,7 @@ const Wishlist = () => {
         </div>
 
         <div className="cart-list">
-          {wishlistItems.length > 0 && (
+          {filteredWishlistItems.length > 0 && (
             <table>
               <tbody>
                 <tr>
@@ -39,7 +49,7 @@ const Wishlist = () => {
                   <th />
                 </tr>
 
-                {wishlistItems.map((item) => (
+                {filteredWishlistItems.map((item) => (
                   <Item
                     key={item.id}
                     id={item.id}
@@ -55,7 +65,7 @@ const Wishlist = () => {
             </table>
           )}
 
-          {wishlistItems.length === 0 && <p>Nothing in the Wishlist</p>}
+          {filteredWishlistItems.length === 0 && <p>Nothing in the Wishlist</p>}
         </div>
 
         <div className="cart-actions">
