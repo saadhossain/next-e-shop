@@ -54,7 +54,7 @@ const WishlistProds = ({
         <strong>{count}</strong>
       </td>
       <td className="cart-item-before" data-label="Price">${price}</td>
-      <td>
+      <td className='wishlist-item-addtocart'>
         <button
           type="submit"
           onClick={() => addToCart(productToSave, count)}
