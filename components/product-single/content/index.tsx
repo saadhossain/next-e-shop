@@ -5,6 +5,7 @@ import type { RootState } from "store";
 import { toggleFavProduct } from "store/reducers/user";
 import type { ProductStoreType, ProductType } from "types";
 
+import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { addToWishlist, removeFromWishlist } from 'store/reducers/wishlist';
 import { useAddToCart } from '../../../hooks/useAddToCart';
@@ -19,12 +20,33 @@ type ProductContent = {
 const Content = ({ product }: ProductContent) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
-  const [color, setColor] = useState<string>("");
-  const [itemSize, setItemSize] = useState<string>("");
+  const router = useRouter();
+  const itemSize = (router.query.size as string) || '';
+  const color = (router.query.color as string) || '';
 
-  const onColorSet = (e: string) => setColor(e);
-  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setItemSize(e.target.value);
+  //Update the router based on color change
+  const onColorSet = (e: string) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, color: e },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+  //Update the router based on size selection
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSize = e.target.value;
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, size: newSize },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
 
   const { favProducts } = useSelector((state: RootState) => state.user);
   const { wishlistItems } = useSelector((state: RootState) => state.wishlist);
@@ -54,7 +76,7 @@ const Content = ({ product }: ProductContent) => {
     thumb: product.images ? product.images[0] : "",
     price: product.currentPrice,
     count,
-    color,
+    color: color,
     size: itemSize,
   };
   //Get the Add to Cart Hook
@@ -97,6 +119,7 @@ const Content = ({ product }: ProductContent) => {
                 name="product-color"
                 color={type.color}
                 valueName={type.label}
+                slectedColor={color}
                 onChange={onColorSet}
               />
             ))}
@@ -106,10 +129,11 @@ const Content = ({ product }: ProductContent) => {
           <h5>
             Size: <strong>See size table</strong>
           </h5>
+          {/* Size Selection Section */}
           <div className="checkbox-color-wrapper">
             <div className="select-wrapper">
-              <select onChange={onSelectChange}>
-                <option>Choose size</option>
+              <select value={itemSize} onChange={onSelectChange}>
+                <option value="">Choose size</option>
                 {productsSizes.map((type) => (
                   <option key={type.id} value={type.label}>
                     {type.label}

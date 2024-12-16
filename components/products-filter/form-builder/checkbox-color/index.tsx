@@ -1,8 +1,10 @@
+
 type CheckboxColorType = {
   type?: string;
   name: string;
   color: string;
   valueName: string;
+  slectedColor: string;
   onChange?: (value: string) => void;
 };
 
@@ -12,6 +14,7 @@ const CheckboxColor = ({
   type = "checkbox",
   onChange,
   valueName,
+  slectedColor
 }: CheckboxColorType) => {
   const onSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const dataName = e.target.getAttribute("data-name");
@@ -21,7 +24,9 @@ const CheckboxColor = ({
   };
 
   return (
-    <label htmlFor={`${color}-${name}`} className="checkbox-color">
+    <label htmlFor={`${color}-${name}`} className="checkbox-color" style={{
+      backgroundColor: slectedColor === valueName ? '#b9b9b9' : 'transparent'
+    }}>
       <input
         onChange={onSelect}
         value={color}
