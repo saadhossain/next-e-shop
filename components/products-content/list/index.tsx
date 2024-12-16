@@ -6,10 +6,10 @@ import ProductItem from "../../product-item";
 import ProductsLoading from "./loading";
 
 const ProductsContent = () => {
+  const router = useRouter();
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSwr("/api/products", fetcher);
   if (error) return <div>Failed to load users</div>;
-  const router = useRouter();
   //Get the Search Text from the router query
   const searchText = router.query.search as string;
   //Get the Search Text from the router query

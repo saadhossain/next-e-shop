@@ -13,7 +13,7 @@ type HeaderType = {
 
 const Header = ({ isErrorPage }: HeaderType) => {
   const router = useRouter();
-  const { search, ...remainingQuery } = router.query;
+  const { search: _search, ...remainingQuery } = router.query;
   const { cartItems } = useSelector((state: RootState) => state.cart);
   const { wishlistItems } = useSelector((state: RootState) => state.wishlist);
   const arrayPaths = ["/"];

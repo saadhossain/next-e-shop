@@ -21,7 +21,7 @@ const Content = ({ product }: ProductContent) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
   const router = useRouter();
-  const { size, ...remainingQuery } = router.query;
+  const { size: _size, ...remainingQuery } = router.query;
   const itemSize = (router.query.size as string) || '';
   const color = (router.query.color as string) || '';
 
@@ -31,7 +31,9 @@ const Content = ({ product }: ProductContent) => {
       {
         pathname: router.pathname,
         query: { ...router.query, color: e },
-      }
+      },
+      undefined,
+      { shallow: true }
     );
   };
   //Update the router based on size selection
@@ -43,13 +45,16 @@ const Content = ({ product }: ProductContent) => {
           pathname: router.pathname,
           query: remainingQuery,
         }
-      )
+      );
+      return;
     }
     router.push(
       {
         pathname: router.pathname,
         query: { ...router.query, size: newSize },
-      }
+      },
+      undefined,
+      { shallow: true }
     );
   };
 
@@ -117,9 +122,9 @@ const Content = ({ product }: ProductContent) => {
         <div className="product-filter-item">
           <h5>Color:</h5>
           <div className="checkbox-color-wrapper">
-            {productsColors.map((type) => (
+            {productsColors.map((type, index) => (
               <CheckboxColor
-                key={type.id}
+                key={index}
                 type="radio"
                 name="product-color"
                 color={type.color}
@@ -139,8 +144,8 @@ const Content = ({ product }: ProductContent) => {
             <div className="select-wrapper">
               <select value={itemSize} onChange={onSelectChange}>
                 <option value="">Choose size</option>
-                {productsSizes.map((type) => (
-                  <option key={type.id} value={type.label}>
+                {productsSizes.map((type, index) => (
+                  <option key={index} value={type.label}>
                     {type.label}
                   </option>
                 ))}
