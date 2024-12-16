@@ -9,7 +9,6 @@ const IndexPage = () => {
   return (
     <Layout>
       <PageIntro />
-      <Toaster />
       <section className="featured">
         <div className="container">
           <article
@@ -106,6 +105,7 @@ const IndexPage = () => {
 
       <ProductsFeatured />
       <Subscribe />
+      <Toaster />
       <Footer />
     </Layout>
   );
