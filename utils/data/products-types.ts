@@ -15,9 +15,19 @@ export const productsTypes = [
     count: '56',
   },
   {
-    id: '4',
-    name: 'Dress shirts',
-    count: '8',
+    id: '5',
+    name: 'Womens Dresses',
+    count: '12',
+  },
+  {
+    id: '6',
+    name: 'Bags',
+    count: '16',
+  },
+  {
+    id: '7',
+    name: 'Shoes',
+    count: '19',
   },
 ];
 
