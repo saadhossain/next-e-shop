@@ -21,6 +21,7 @@ const Content = ({ product }: ProductContent) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
   const router = useRouter();
+  const { size, ...remainingQuery } = router.query;
   const itemSize = (router.query.size as string) || '';
   const color = (router.query.color as string) || '';
 
@@ -30,21 +31,25 @@ const Content = ({ product }: ProductContent) => {
       {
         pathname: router.pathname,
         query: { ...router.query, color: e },
-      },
-      undefined,
-      { shallow: true }
+      }
     );
   };
   //Update the router based on size selection
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSize = e.target.value;
+    if (newSize === "") {
+      router.push(
+        {
+          pathname: router.pathname,
+          query: remainingQuery,
+        }
+      )
+    }
     router.push(
       {
         pathname: router.pathname,
         query: { ...router.query, size: newSize },
-      },
-      undefined,
-      { shallow: true }
+      }
     );
   };
 

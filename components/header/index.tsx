@@ -13,6 +13,7 @@ type HeaderType = {
 
 const Header = ({ isErrorPage }: HeaderType) => {
   const router = useRouter();
+  const { search, ...remainingQuery } = router.query;
   const { cartItems } = useSelector((state: RootState) => state.cart);
   const { wishlistItems } = useSelector((state: RootState) => state.wishlist);
   const arrayPaths = ["/"];
@@ -70,7 +71,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
   const clearSearch = () => {
     router.push({
       pathname: router.pathname,
-      query: { ...router.query, search: '' },
+      query: remainingQuery,
     })
     setSearchText('')
   };

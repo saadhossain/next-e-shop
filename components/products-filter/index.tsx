@@ -18,8 +18,9 @@ const ProductsFilter = () => {
   const addQueryParams = () => {
     // query params changes
   };
-  const [prodCategory, setProdCategory] = useState<string>("");
+
   const router = useRouter();
+  const { category, ...remainingQuery } = router.query;
 
   //Set the Selected Category to the Url for filtering feature
   const handleCategoryFilter = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,10 @@ const ProductsFilter = () => {
         query: { ...router.query, category: e.target.name },
       });
     } else {
-      setProdCategory("");
+      router.push({
+        pathname: router.pathname,
+        query: remainingQuery,
+      });
     }
   };
   //Get the Search Text from the router query
@@ -48,7 +52,7 @@ const ProductsFilter = () => {
         className={`products-filter__wrapper ${filtersOpen ? "products-filter__wrapper--open" : ""}`}
       >
         <div className="products-filter__block">
-          <button type="button">Product type {prodCategory}</button>
+          <button type="button">Product type</button>
           <div className="products-filter__block__content">
             {productsTypes.map((type) => (
               <Checkbox
