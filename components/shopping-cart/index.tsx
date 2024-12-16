@@ -2,11 +2,20 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import type { RootState } from "store";
 
+import { useRouter } from 'next/router';
+import { ProductStoreType } from 'types';
 import CheckoutStatus from "../checkout-status";
 import Item from "./item";
 
 const ShoppingCart = () => {
   const { cartItems } = useSelector((state: RootState) => state.cart);
+  const router = useRouter();
+  //Get the Search Text from the router query
+  const searchText = router.query.search as string;
+  // Filter the Products depending on the search
+  const filteredCartItems = (searchText
+    ? cartItems?.filter((item: ProductStoreType) => item.name.toLowerCase().includes(searchText))
+    : cartItems)
 
   const priceTotal = () => {
     let totalPrice = 0;
@@ -26,7 +35,7 @@ const ShoppingCart = () => {
         </div>
 
         <div className="cart-list">
-          {cartItems.length > 0 && (
+          {filteredCartItems.length > 0 && (
             <table>
               <tbody>
                 <tr>
@@ -38,7 +47,7 @@ const ShoppingCart = () => {
                   <th />
                 </tr>
 
-                {cartItems.map((item) => (
+                {filteredCartItems.map((item) => (
                   <Item
                     key={item.id}
                     id={item.id}
@@ -54,7 +63,7 @@ const ShoppingCart = () => {
             </table>
           )}
 
-          {cartItems.length === 0 && <p>Nothing in the cart</p>}
+          {filteredCartItems.length === 0 && <p>Nothing in the cart</p>}
         </div>
 
         <div className="cart-actions">
