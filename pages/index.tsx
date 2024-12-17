@@ -1,4 +1,3 @@
-import { Toaster } from 'react-hot-toast';
 import Footer from "../components/footer";
 import PageIntro from "../components/page-intro";
 import ProductsFeatured from "../components/products-featured";
@@ -105,7 +104,6 @@ const IndexPage = () => {
 
       <ProductsFeatured />
       <Subscribe />
-      <Toaster />
       <Footer />
     </Layout>
   );

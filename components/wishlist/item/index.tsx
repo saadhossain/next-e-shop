@@ -1,4 +1,5 @@
 import { useAddToCart } from 'hooks/useAddToCart';
+import toast from 'react-hot-toast';
 import { useDispatch } from "react-redux";
 import { removeFromWishlist } from "store/reducers/wishlist";
 import type { ProductStoreType } from "types";
@@ -16,7 +17,8 @@ const WishlistProds = ({
 
   // Function for removeing product from the Wishlist
   const handleRemoveFromWishlist = () => {
-    dispatch(removeFromWishlist(id))
+    dispatch(removeFromWishlist(id));
+    toast.success('Product Removed from Wishlist');
   };
   const productToSave = {
     id,

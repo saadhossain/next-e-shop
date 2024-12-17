@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useDispatch } from "react-redux";
 import { removeProduct, setCount } from "store/reducers/cart";
 import type { ProductStoreType } from "types";
@@ -25,6 +26,7 @@ const ShoppingCart = ({
         price,
       }),
     );
+    toast.success('Product Removed from Cart');
   };
 
   const setProductCount = (count: number) => {
