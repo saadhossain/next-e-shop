@@ -10,6 +10,7 @@ import { Poppins } from "next/font/google";
 import Router from "next/router";
 import { Fragment } from "react";
 
+import { Toaster } from 'react-hot-toast';
 import { wrapper } from "../store";
 import * as gtag from "../utils/gtag";
 
@@ -35,6 +36,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
       }
     `}</style>
     <Component {...pageProps} />
+    <Toaster />
   </Fragment>
 );
 
