@@ -45,6 +45,7 @@ It's easy to have it running locally.
 - Just do a `yarn install` to install the dependencies.
 - Then do a `yarn dev` to run it locally.
 - Use `yarn run build` to build the app.
+- If having issues while `Building` and `Deploying`, please disable the `.eslintrc.json`
 
 ## Backend
 
